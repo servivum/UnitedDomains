@@ -1,5 +1,5 @@
 {
-    "name": "hades-architect/united-domains",
+    "name": "servivum/united-domains",
     "description": "A library to use United Domains domainreselling.de API",
     "type": "library",
     "license": "MIT",
@@ -7,6 +7,10 @@
         {
             "name": "Aleksandr Volochnev",
             "email": "a.volochnev@gmail.com"
+        },
+        {
+            "name": "Timo Isik",
+            "email": "timo.isik@servivum.com"
         }
     ],
     "require": {
