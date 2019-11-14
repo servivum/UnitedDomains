@@ -19,11 +19,19 @@ class Response implements ResponseInterface
      */
     protected $properties = [];
 
+    /**
+     * @var array
+     */
+    protected $collection = [];
+
     public function __construct(int $code, string $description, array $properties = [])
     {
         $this->code        = $code;
         $this->description = $description;
         $this->properties  = $properties;
+
+        // Create collectoin of properties
+        $this->collection = $this->convertToCollection($properties);
     }
 
     /**
@@ -116,5 +124,27 @@ class Response implements ResponseInterface
     public function __toString(): string
     {
         return sprintf('%d: %s', $this->getCode(), $this->getDescription());
+    }
+
+    public function getCollection()
+    {
+        return $this->collection;
+    }
+
+    protected function convertToCollection($properties)
+    {
+        $data = [];
+        if (!empty($properties)) {
+            foreach($properties as $key => $propertyValue) {
+                $excludeProperties = ['total', 'count', 'first', 'limit', 'last'];
+                if (!in_array($key, $excludeProperties)) {
+                    foreach ($propertyValue as $row => $value) {
+                        $data[$row][$key] = $value;
+                    }
+                }
+            }
+        }
+
+        return $data;
     }
 }

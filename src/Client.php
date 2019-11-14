@@ -25,13 +25,19 @@ class Client implements BaseClientInterface
      */
     protected $uri;
 
-    public function __construct($username, $password, ClientInterface $httpClient = null)
+    public function __construct($username, $password, $testEnvironment = false, ClientInterface $httpClient = null)
     {
+        $query = sprintf('s_login=%s&s_pw=%s', $username, $password);
+
+        if ($testEnvironment === true) {
+            $query .= '&s_entity=1234';
+        }
+
         $this->uri = Uri::fromParts([
             'scheme' => 'https',
             'host' => 'api.domainreselling.de',
             'path' => '/api/call.cgi',
-            'query' => sprintf('s_login=%s&s_pw=%s', $username, $password)
+            'query' => $query
         ]);
 
         if (null === $httpClient) {
@@ -90,7 +96,6 @@ class Client implements BaseClientInterface
             throw new InvalidResponseFormatException('Response body begins neither with "[RESPONSE]" header nor code property');
         }
 
-
         if (substr($body, 0, 10) === '[RESPONSE]' && substr($body, -4, 3) != 'EOF') {
             throw new InvalidResponseFormatException('Response body does not ends with "EOF" line');
         }
@@ -120,12 +125,23 @@ class Client implements BaseClientInterface
                     $description = substr($line, 14);
                     break;
                 case 'prop':
-                    preg_match_all("/property\[(.*)\]\[(\d+)\] = (.*)/", $line, $matches);
+                    preg_match_all("/property\[(.*)\]\[(\d+)\] =[ ]?(.*)/", $line, $matches);
                     $properties[$matches[1][0]][$matches[2][0]] = $matches[3][0];
                     break;
             }
         }
 
         return new Response($code, $description, $properties);
+    }
+
+    public function __call($method, $arguments = null)
+    {
+        $method = ucfirst($method);
+
+        if (empty($arguments)) {
+            return $this->call($method);
+        } else {
+            return $this->call($method, $arguments[0]);
+        }
     }
 }
