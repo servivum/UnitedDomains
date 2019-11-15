@@ -30,7 +30,7 @@ class Response implements ResponseInterface
         $this->description = $description;
         $this->properties  = $properties;
 
-        // Create collectoin of properties
+        // Create collection of properties
         $this->collection = $this->convertToCollection($properties);
     }
 
