@@ -16,7 +16,11 @@ composer require hades-architect/united-domains
 
 ```php
 $client = new \HadesArchitect\UnitedDomains\Client($username, $password);
-$response = $client->call('CheckDomain', ['domain' => 'example.com']);
+
+$response = $client->checkDomain([
+                'domain' => $domain,
+            ]);
+
 echo $response;
 ```
 
