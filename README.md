@@ -18,7 +18,7 @@ composer require hades-architect/united-domains
 $client = new \HadesArchitect\UnitedDomains\Client($username, $password);
 
 $response = $client->checkDomain([
-                'domain' => $domain,
+                'domain' => 'example.com',
             ]);
 
 echo $response;
@@ -47,4 +47,3 @@ echo $response;
 ## Todo
 
 - [ ] More tests
-- [ ] Integration with Travis CI
