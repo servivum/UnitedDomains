@@ -43,5 +43,4 @@ echo $response;
 ## Todo
 
 - [ ] More tests
-- [x] Integration with Travis CI
-- [ ] More methods for ClientFacade
+- [ ] Integration with Travis CI
