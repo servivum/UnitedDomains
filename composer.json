@@ -23,5 +23,8 @@
     },
     "autoload": {
         "psr-4": { "HadesArchitect\\UnitedDomains\\": "src" }
+    },
+    "scripts": {
+        "test": "phpunit --bootstrap vendor/autoload.php tests"
     }
 }
