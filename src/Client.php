@@ -62,7 +62,7 @@ class Client implements BaseClientInterface
         try {
             $body = $this->doCall(new Request('get', $this->uri->withQuery($query)));
         } catch (GuzzleException $guzzleException) {
-            throw new ApiException('An error occured during API call', 0, $guzzleException);
+            throw new ApiException('An error occurred during API call', 0, $guzzleException);
         }
 
         $this->validateResponse($body);
